@@ -38,13 +38,12 @@ class Deque {
     // Make the new node's `next` equal to the real starting node (not the dummy)
     newNode.next = this.head.next
 
-    // Make the new 'real' head the newNode
+    // Make the new 'real' head newNode
     this.head.next = newNode
 
-    // Do we need to set this? Prob not ...
-    // newNode.prev = this.head
-
-    if (!newNode.next) {
+    if (newNode.next) {
+      newNode.next.prev = newNode
+    } else {
       // If list was empty before insertion
       this.tail = newNode
     }

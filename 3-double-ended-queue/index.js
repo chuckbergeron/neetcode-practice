@@ -8,8 +8,8 @@ const inputArray = testCaseArray2
 const testResultArray2 = [null, null, 1, 2]
 
 //
-const outputArray = testResultArray2
-const actualArray = []
+const expectedOutputArray = testResultArray2
+const resultArray = []
 
 let queue = new Deque()
 
@@ -23,7 +23,7 @@ for (let i = 0; i < inputArray.length; i++) {
       args.push(inputArray[j])
       j++
     }
-    actualArray.push(queue[input](...args))
+    resultArray.push(queue[input](...args))
   }
 }
 
@@ -31,11 +31,24 @@ function primitiveArraysAreEqualJSON(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2)
 }
 
-if (!primitiveArraysAreEqualJSON(outputArray, actualArray)) {
+if (!primitiveArraysAreEqualJSON(expectedOutputArray, resultArray)) {
+  console.log('')
   console.error('Fail :(')
-  console.log('Test result array: ', outputArray, ', does not match your result array `actualArray`: ', actualArray)
+  console.log('')
+  console.log(`Test's expected output:`)
+  console.log(expectedOutputArray)
+  console.log('')
+  console.log(`Does not match your output:`)
+  console.log(resultArray)
+  console.log('')
 } else {
-  console.log('Pass!')
-  console.log('outputArray', outputArray)
-  console.log('actualArray', actualArray)
+  console.log('')
+  console.log('\x1b[32m%s\x1b[0m', 'Pass!')
+  console.log('')
+  console.log(`Test's expected output:`)
+  console.log(expectedOutputArray)
+  console.log('')
+  console.log('Your output:')
+  console.log(resultArray)
+  console.log('')
 }
