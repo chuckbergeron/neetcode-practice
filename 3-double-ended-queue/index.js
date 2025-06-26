@@ -1,3 +1,4 @@
+const { logPrimitiveArraysEqual } = require('../utils/utils.js')
 const { Deque } = require('./deque.js')
 
 // const testCaseArray1 = ['isEmpty', 'append', 10, 'isEmpty', 'appendleft', 20, 'popleft', 'pop', 'pop', 'append', 30, 'pop', 'isEmpty']
@@ -27,28 +28,4 @@ for (let i = 0; i < inputArray.length; i++) {
   }
 }
 
-function primitiveArraysAreEqualJSON(arr1, arr2) {
-  return JSON.stringify(arr1) === JSON.stringify(arr2)
-}
-
-if (!primitiveArraysAreEqualJSON(expectedOutputArray, resultArray)) {
-  console.log('')
-  console.error('Fail :(')
-  console.log('')
-  console.log(`Test's expected output:`)
-  console.log(expectedOutputArray)
-  console.log('')
-  console.log(`Does not match your output:`)
-  console.log(resultArray)
-  console.log('')
-} else {
-  console.log('')
-  console.log('\x1b[32m%s\x1b[0m', 'Pass!')
-  console.log('')
-  console.log(`Test's expected output:`)
-  console.log(expectedOutputArray)
-  console.log('')
-  console.log('Your output:')
-  console.log(resultArray)
-  console.log('')
-}
+logPrimitiveArraysEqual(expectedOutputArray, resultArray)

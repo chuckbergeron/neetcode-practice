@@ -1,0 +1,32 @@
+// Converts arrays into JSON strings for comparison's sake
+const primitiveArraysAreEqualJSON = (arr1, arr2) => {
+  return JSON.stringify(arr1) === JSON.stringify(arr2)
+}
+
+// Uses the primitiveArraysAreEqualJSON test which won't account for objects with values in different orders, etc.
+// Only useful for basic array comparisons. There are much better (but more complicated) solutions you could use
+const logPrimitiveArraysEqual = (expectedOutputArray, resultArray) => {
+  if (!primitiveArraysAreEqualJSON(expectedOutputArray, resultArray)) {
+    console.log('')
+    console.error('Fail :(')
+    console.log('')
+    console.log(`Test's expected output:`)
+    console.log(expectedOutputArray)
+    console.log('')
+    console.log(`Does not match your output:`)
+    console.log(resultArray)
+    console.log('')
+  } else {
+    console.log('')
+    console.log('\x1b[32m%s\x1b[0m', 'Pass!')
+    console.log('')
+    console.log(`Test's expected output:`)
+    console.log(expectedOutputArray)
+    console.log('')
+    console.log('Your output:')
+    console.log(resultArray)
+    console.log('')
+  }
+}
+
+module.exports = { logPrimitiveArraysEqual, primitiveArraysAreEqualJSON }

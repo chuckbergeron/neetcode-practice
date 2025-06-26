@@ -1,3 +1,4 @@
+const { logPrimitiveArraysEqual } = require('../utils/utils.js')
 const { Pair } = require('./pair.js')
 
 const inputArray = [new Pair(3, 'cat'), new Pair(3, 'bird'), new Pair(2, 'dog')]
@@ -23,49 +24,24 @@ const expectedOutputArray = [
  * @param {Pair[]} pairs
  * @returns {Pair[][]}
  */
-const insertionSort = (arrayOfPairs) => {
+const insertionSort = (pairs) => {
   let outArray = []
 
-  for (let i = 0; i < arrayOfPairs.length; i++) {
+  for (let i = 0; i < pairs.length; i++) {
     let j = i - 1
-    while (j >= 0 && arrayOfPairs[j + 1].key < arrayOfPairs[j].key) {
-      const tmp = arrayOfPairs[j]
-      arrayOfPairs[j] = arrayOfPairs[j + 1]
-      arrayOfPairs[j + 1] = tmp
+    while (j >= 0 && pairs[j + 1].key < pairs[j].key) {
+      const tmp = pairs[j]
+      pairs[j] = pairs[j + 1]
+      pairs[j + 1] = tmp
       j = j - 1
     }
 
-    outArray = [...outArray, [...arrayOfPairs]]
+    outArray = [...outArray, [...pairs]]
   }
 
   return outArray
 }
 
-// Function modifies the input array, do not need assignment here
 const resultArray = insertionSort(inputArray)
 
-function primitiveArraysAreEqualJSON(arr1, arr2) {
-  return JSON.stringify(arr1) === JSON.stringify(arr2)
-}
-
-if (!primitiveArraysAreEqualJSON(expectedOutputArray, resultArray)) {
-  console.log('')
-  console.error('Fail :(')
-  console.log('')
-  console.log(`Test's expected output:`)
-  console.log(expectedOutputArray)
-  console.log('')
-  console.log(`Does not match your output:`)
-  console.log(resultArray)
-  console.log('')
-} else {
-  console.log('')
-  console.log('\x1b[32m%s\x1b[0m', 'Pass!')
-  console.log('')
-  console.log(`Test's expected output:`)
-  console.log(expectedOutputArray)
-  console.log('')
-  console.log('Your output:')
-  console.log(resultArray)
-  console.log('')
-}
+logPrimitiveArraysEqual(expectedOutputArray, resultArray)

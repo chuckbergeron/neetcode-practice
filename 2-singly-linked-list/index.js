@@ -1,9 +1,10 @@
+const { logPrimitiveArraysEqual } = require('../utils/utils.js')
 const { LinkedList } = require('./linkedList.js')
 
 const inputArray = ['insertHead', 1, 'insertTail', 2, 'insertHead', 0, 'remove', 1, 'getValues']
 
-let outputArray = [null, null, null, true, [0, 2]]
-let actualArray = []
+let expectedOutputArray = [null, null, null, true, [0, 2]]
+let resultArray = []
 
 let list = new LinkedList()
 
@@ -17,12 +18,8 @@ for (let i = 0; i < inputArray.length; i++) {
       args.push(inputArray[j])
       j++
     }
-    actualArray.push(list[input](...args))
+    resultArray.push(list[input](...args))
   }
 }
 
-function primitiveArraysAreEqualJSON(arr1, arr2) {
-  return JSON.stringify(arr1) === JSON.stringify(arr2)
-}
-
-console.log(primitiveArraysAreEqualJSON(outputArray, actualArray))
+logPrimitiveArraysEqual(expectedOutputArray, resultArray)
