@@ -30,7 +30,7 @@ class Deque {
 
   /**
    * @param {number} value
-   * @return {null} (to match the contrived test case)
+   * @return {null} (instead of undefined, to match the contrived test case)
    */
   appendleft(val) {
     const newNode = new DequeNode(val)
@@ -53,7 +53,7 @@ class Deque {
 
   /**
    * @param {number} val
-   * @return {null} (to match the contrived test case)
+   * @return {null} (instead of undefined, to match the contrived test case)
    */
   append(val) {
     const newNode = new DequeNode(val)
