@@ -62,25 +62,62 @@ class TreeMap {
     if (key < current.key) {
       // traverse left
       while (current.left) {
-        this._insertHelper(current, key, val)
+        if (!current.left) {
+          current.left = new TreeNode(key, val)
+        } else {
+          this._insertHelper(current, key, val)
+        }
       }
-      current.left = new TreeNode(key, val)
     } else if (key > current.key) {
       // traverse right
       while (current.right) {
-        this._insertHelper(current, key, val)
+        if (!current.right) {
+          current.right = new TreeNode(key, val)
+        } else {
+          this._insertHelper(current, key, val)
+        }
       }
-      current.right = new TreeNode(key, val)
     } else {
-      return null
+      // Overwrite existing
+      current.key = key
+      current.val = val
     }
   }
 
   /**
+   *  2. If we could not find the key
+   *  3. If we did find the key
+   *
    * @param {number} key
    * @returns {number}
    */
-  get(key) {}
+  get(key) {
+    if (!this.root) {
+      console.warn('TreeMap is currently empty')
+      return null
+    } else {
+      const current = this.root
+      return this._getHelper(current, key)
+    }
+  }
+
+  _getHelper(current, key) {
+    console.log('Trying to find', key)
+    // console.log(current)
+    console.log(current.key)
+    if (key < current.key) {
+      while (current.left) {
+        this._getHelper(current, key, val)
+      }
+    } else if (key > current.key) {
+      while (current.right) {
+        this._getHelper(current, key, val)
+      }
+    } else {
+      console.log('hit!')
+      return current.val
+    }
+  }
 
   /**
    * @returns {number}
@@ -103,3 +140,5 @@ class TreeMap {
    */
   getInorderKeys() {}
 }
+
+module.exports = { TreeMap }
