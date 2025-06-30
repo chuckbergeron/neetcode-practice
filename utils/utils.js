@@ -1,3 +1,5 @@
+const GREEN_CONSOLE_LOG_STRING = '\x1b[32m%s\x1b[0m'
+
 // Converts arrays into JSON strings for comparison's sake
 const primitiveArraysAreEqualJSON = (arr1, arr2) => {
   return JSON.stringify(arr1) === JSON.stringify(arr2)
@@ -18,7 +20,7 @@ const logPrimitiveArraysEqual = (expectedOutputArray, resultArray) => {
     console.log('')
   } else {
     console.log('')
-    console.log('\x1b[32m%s\x1b[0m', 'Pass!')
+    console.log(GREEN_CONSOLE_LOG_STRING, 'Pass!')
     console.log('')
     console.log(`Test's expected output:`)
     console.log(expectedOutputArray)

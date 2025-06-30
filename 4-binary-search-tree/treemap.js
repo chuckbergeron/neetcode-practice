@@ -48,39 +48,37 @@ class TreeMap {
    * @returns {void}
    */
   insert(key, val) {
+    const newNode = new TreeNode(key, val)
+
     if (!this.root) {
-      this.root = new TreeNode(key, val)
-    } else {
-      const current = this.root
-      this._insertHelper(current, key, val)
+      this.root = newNode
+      return null
     }
 
-    return null
-  }
+    let current = this.root
+    while (true) {
+      if (key < current.key) {
+        // traverse left
+        if (!current.left) {
+          current.left = newNode
+          return null
+        }
 
-  _insertHelper(current, key, val) {
-    if (key < current.key) {
-      // traverse left
-      while (current.left) {
-        this._insertHelper(current, key, val)
-      }
-
-      if (!current.left) {
-        current.left = new TreeNode(key, val)
-      }
-    } else if (key > current.key) {
-      while (current.right) {
+        current = current.left
+      } else if (key > current.key) {
         // traverse right
-        this._insertHelper(current, key, val)
-      }
+        if (!current.right) {
+          current.right = newNode
+          return null
+        }
 
-      if (!current.right) {
-        current.right = new TreeNode(key, val)
+        current = current.right
+      } else {
+        // Overwrite existing
+        console.warn('overwriting existing !')
+        current.val = val
+        return null
       }
-    } else {
-      // Overwrite existing
-      current.key = key
-      current.val = val
     }
   }
 
@@ -95,30 +93,19 @@ class TreeMap {
     if (!this.root) {
       console.warn('TreeMap is currently empty')
       return -1
-    } else {
-      const current = this.root
-      return this._getHelper(current, key)
-    }
-  }
-
-  _getHelper(current, key) {
-    if (current.key === key) {
-      return current.val
     }
 
-    if (key < current.key) {
-      if (current.left.key === key) {
-        return current.left.val
+    let current = this.root
+    while (current !== null) {
+      if (key === current.key) {
+        const GREEN_CONSOLE_LOG_STRING = '\x1b[32m%s\x1b[0m'
+        return current.val
       }
-      while (current.left) {
-        this._getHelper(current, key, val)
-      }
-    } else if (key > current.key) {
-      if (current.right.key === key) {
-        return current.right.val
-      }
-      while (current.right) {
-        this._getHelper(current, key)
+
+      if (key < current.key) {
+        current = current.left
+      } else if (key > current.key) {
+        current = current.right
       }
     }
 
@@ -129,7 +116,23 @@ class TreeMap {
   /**
    * @returns {number}
    */
-  getMin() {}
+  getMin() {
+    if (!this.root) {
+      console.warn('TreeMap is currently empty')
+      return -1
+    }
+
+    let current = this.root
+    while (current !== null) {
+      if (current.left) {
+        current = current.left
+      } else if (current.right) {
+        current = current.right
+      } else {
+        return current.val
+      }
+    }
+  }
 
   /**
    * @returns {number}
