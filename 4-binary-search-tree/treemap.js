@@ -37,11 +37,11 @@ class TreeMap {
     this.root = null
   }
 
-  //     5
-  //   3   6
-  //  2,4
+  //     1
+  //      4
   //
-  // inserting a 1
+  //
+  // inserting a 4
   /**
    * @param {number} key
    * @param {number} val
@@ -62,20 +62,20 @@ class TreeMap {
     if (key < current.key) {
       // traverse left
       while (current.left) {
-        if (!current.left) {
-          current.left = new TreeNode(key, val)
-        } else {
-          this._insertHelper(current, key, val)
-        }
+        this._insertHelper(current, key, val)
+      }
+
+      if (!current.left) {
+        current.left = new TreeNode(key, val)
       }
     } else if (key > current.key) {
-      // traverse right
       while (current.right) {
-        if (!current.right) {
-          current.right = new TreeNode(key, val)
-        } else {
-          this._insertHelper(current, key, val)
-        }
+        // traverse right
+        this._insertHelper(current, key, val)
+      }
+
+      if (!current.right) {
+        current.right = new TreeNode(key, val)
       }
     } else {
       // Overwrite existing
@@ -94,7 +94,7 @@ class TreeMap {
   get(key) {
     if (!this.root) {
       console.warn('TreeMap is currently empty')
-      return null
+      return -1
     } else {
       const current = this.root
       return this._getHelper(current, key)
@@ -102,21 +102,28 @@ class TreeMap {
   }
 
   _getHelper(current, key) {
-    console.log('Trying to find', key)
-    // console.log(current)
-    console.log(current.key)
+    if (current.key === key) {
+      return current.val
+    }
+
     if (key < current.key) {
+      if (current.left.key === key) {
+        return current.left.val
+      }
       while (current.left) {
         this._getHelper(current, key, val)
       }
     } else if (key > current.key) {
-      while (current.right) {
-        this._getHelper(current, key, val)
+      if (current.right.key === key) {
+        return current.right.val
       }
-    } else {
-      console.log('hit!')
-      return current.val
+      while (current.right) {
+        this._getHelper(current, key)
+      }
     }
+
+    // The key was not found
+    return -1
   }
 
   /**

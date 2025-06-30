@@ -3,7 +3,7 @@ const { TreeMap } = require('./treemap.js')
 
 // const inputArray = ['insert', 1, 2, 'get', 1, 'insert', 4, 0, 'getMin', 'getMax']
 const inputArray = ['insert', 1, 2, 'get', 1, 'insert', 4, 0, 'get', 4]
-const expectedOutputArray = [null, 2, null, 2, 0]
+const expectedOutputArray = [null, 2, null, 0]
 
 const resultArray = []
 
