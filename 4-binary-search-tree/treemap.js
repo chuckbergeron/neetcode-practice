@@ -75,7 +75,6 @@ class TreeMap {
         current = current.right
       } else {
         // Overwrite existing
-        console.warn('overwriting existing !')
         current.val = val
         return null
       }
@@ -83,23 +82,24 @@ class TreeMap {
   }
 
   /**
-   *  2. If we could not find the key
-   *  3. If we did find the key
-   *
    * @param {number} key
    * @returns {number}
    */
   get(key) {
     if (!this.root) {
-      console.warn('TreeMap is currently empty')
       return -1
     }
 
+    const found = this._find(key)
+
+    return found ? found.val : -1
+  }
+
+  _find(key) {
     let current = this.root
     while (current !== null) {
       if (key === current.key) {
-        const GREEN_CONSOLE_LOG_STRING = '\x1b[32m%s\x1b[0m'
-        return current.val
+        return current
       }
 
       if (key < current.key) {
@@ -118,37 +118,115 @@ class TreeMap {
    */
   getMin() {
     if (!this.root) {
-      console.warn('TreeMap is currently empty')
       return -1
     }
 
-    let current = this.root
-    while (current !== null) {
-      if (current.left) {
-        current = current.left
-      } else if (current.right) {
-        current = current.right
-      } else {
-        return current.val
-      }
+    const current = this.root
+    const found = this._findMin(current)
+    return found ? found.val : -1
+  }
+
+  _findMin(current) {
+    while (current && current.left) {
+      current = current.left
     }
+    return current
   }
 
   /**
    * @returns {number}
    */
-  getMax() {}
+  getMax() {
+    if (!this.root) {
+      return -1
+    }
+
+    const current = this.root
+    const found = this._findMax(current)
+    return found ? found.val : -1
+  }
+
+  _findMax(current) {
+    while (current && current.right) {
+      current = current.right
+    }
+    return current
+  }
 
   /**
    * @param {number} key
    * @returns {void}
    */
-  remove(key) {}
+  remove(key) {
+    if (!this.root) {
+      return null
+    }
+
+    let current = this.root
+    console.log('REMOVING')
+    console.log(key)
+
+    this.removeHelper(current, key)
+
+    return null
+  }
+
+  removeHelper(current, key) {
+    // Case 1: Leaf w/ 0 or 1 child
+    if (key > current.key) {
+      current.right = this.removeHelper(current.right, key)
+    } else if (key < current.key) {
+      current.left = this.removeHelper(current.left, key)
+    } else {
+      // We found the key we're trying to remove
+      console.log("We found the key we're trying to remove")
+      // console.log(current)
+      console.log(current.key)
+
+      if (!current.left) {
+        console.log('return right')
+        console.log(current.right)
+        return current.right
+      } else if (!current.right) {
+        return current.left
+      } else {
+        // Case 2: Leaf w/ 2 children
+        // replace node with one of it's descendants
+        let minNode = this._findMin(current.right)
+        current.key = minNode.key
+        current.val = minNode.val
+        current.right = this.removeHelper(current.right, minNode.key)
+      }
+    }
+
+    return current
+  }
 
   /**
    * @returns {number[]}
    */
-  getInorderKeys() {}
+  getInorderKeys() {
+    if (!this.root) {
+      return []
+    }
+
+    const out = []
+    let current = this.root
+    console.log('getInorderKeys')
+    console.log(current)
+    this.inorderTraversalHelper(current, out)
+    return out
+  }
+
+  inorderTraversalHelper(current, out) {
+    if (!current) {
+      return
+    }
+
+    this.inorderTraversalHelper(current.left, out)
+    out.push(current.key)
+    this.inorderTraversalHelper(current.right, out)
+  }
 }
 
 module.exports = { TreeMap }

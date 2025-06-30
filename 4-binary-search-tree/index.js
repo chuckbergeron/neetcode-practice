@@ -2,8 +2,9 @@ const { logPrimitiveArraysEqual } = require('../utils/utils.js')
 const { TreeMap } = require('./treemap.js')
 
 // const inputArray = ['insert', 1, 2, 'get', 1, 'insert', 4, 0, 'getMin', 'getMax']
-const inputArray = ['insert', 1, 2, 'get', 1, 'insert', 4, 0, 'get', 4, 'insert', 3, 1, 'get', 3, 'insert', 5, 6, 'get', 5, 'getMin']
-const expectedOutputArray = [null, 2, null, 0, null, 1, null, 6, 1]
+const inputArray = ['insert', 1, 2, 'insert', 4, 2, 'insert', 3, 7, 'insert', 2, 1, 'getInorderKeys', 'remove', 1, 'getInorderKeys']
+// const inputArray = ['insert', 1, 2, 'insert', 4, 2, 'insert', 3, 7, 'insert', 2, 1, 'get', 3]
+const expectedOutputArray = [null, null, null, null, [1, 2, 3, 4], null, [2, 3, 4]]
 
 const resultArray = []
 
