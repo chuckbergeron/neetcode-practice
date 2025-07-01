@@ -37,11 +37,6 @@ class TreeMap {
     this.root = null
   }
 
-  //     1
-  //      4
-  //
-  //
-  // inserting a 4
   /**
    * @param {number} key
    * @param {number} val
@@ -108,9 +103,6 @@ class TreeMap {
         current = current.right
       }
     }
-
-    // The key was not found
-    return -1
   }
 
   /**
@@ -162,11 +154,7 @@ class TreeMap {
       return null
     }
 
-    let current = this.root
-    console.log('REMOVING')
-    console.log(key)
-
-    this.removeHelper(current, key)
+    this.root = this.removeHelper(this.root, key)
 
     return null
   }
@@ -179,13 +167,7 @@ class TreeMap {
       current.left = this.removeHelper(current.left, key)
     } else {
       // We found the key we're trying to remove
-      console.log("We found the key we're trying to remove")
-      // console.log(current)
-      console.log(current.key)
-
       if (!current.left) {
-        console.log('return right')
-        console.log(current.right)
         return current.right
       } else if (!current.right) {
         return current.left
@@ -212,8 +194,6 @@ class TreeMap {
 
     const out = []
     let current = this.root
-    console.log('getInorderKeys')
-    console.log(current)
     this.inorderTraversalHelper(current, out)
     return out
   }
