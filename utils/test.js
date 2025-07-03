@@ -31,13 +31,12 @@ const logPrimitiveArraysEqual = (expectedOutputArray, resultArray) => {
  * a new array of each result.
  *
  * @param {String|Number[]} inputArray, an optional class name at start to instantiate, function names and their respective args
- * @param {String|Number[]} classInstance, the already instantiated instance of the class to run functions against
- * @param {String|Number[]} _class, named with a leading underscore since 'class' is a restricted word in JS
+ * @param {Class} _class, named with a leading underscore since 'class' is a restricted word in JS
+ *
+ * @returns {String|Number|Object|null[]}, the resultant array
  */
-const executeFunctionArray = (inputArray, classInstance = null, _class = null) => {
-  if (!classInstance) {
-    classInstance = _instantiateClass(inputArray, _class)
-  }
+const executeFunctionArray = (inputArray, _class) => {
+  const classInstance = _instantiateClass(inputArray, _class)
 
   return _executeInputArrayFunctions(inputArray, classInstance)
 }

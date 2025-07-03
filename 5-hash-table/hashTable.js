@@ -1,3 +1,5 @@
+const GREEN_CONSOLE_LOG_STRING = '\x1b[32m%s\x1b[0m'
+
 // Design a Hash Table class. Your HashTable class should support the following operations:
 //
 // HashTable(int capacity) will initialize an empty hash table with a capacity of capacity, where capacity > 1.
@@ -34,14 +36,66 @@ class HashTable {
   /**
    * @param {number} capacity
    */
-  constructor(capacity) {}
+  constructor(capacity) {
+    if (capacity <= 0) {
+      throw new Error('capacity argument must be a positive integer')
+    }
+    this.size = 0
+    this.capacity = capacity
+    this.table = new Array(this.capacity).fill(null)
+  }
+
+  /**
+   * @param {number} key
+   * @return {number} number of the index to use
+   */
+  hash(key) {
+    return key % this.capacity
+  }
 
   /**
    * @param {number} key
    * @param {number} value
-   * @return {void}
+   * @return {null} (instead of undefined, to match the contrived test case)
    */
-  insert(key, value) {}
+  insert(key, value) {
+    // 1. Insert
+    let index = this.hash(key)
+    console.log('index')
+    console.log(index)
+
+    // Loop through records in the array until we find an existing entry key that matches or
+    // an empty slot to fill in
+    while (true) {
+      // 1. Found an empty slot to use, insert new node
+      if (this.table[index] === null) {
+        console.log(GREEN_CONSOLE_LOG_STRING, 'can insert here!')
+
+        const newNode = new Node(key, value)
+        this.table[index] = newNode
+
+        this.size += 1
+
+        // Optionally rehash / resize if the HashTable's load is greater than or equal to 50%
+        if (this.size >= Math.floor(this.capacity / 2)) {
+          this.resize()
+        }
+
+        return null
+      }
+
+      // 2. Found existing, update it
+      if (this.table[index].key === key) {
+        console.log(GREEN_CONSOLE_LOG_STRING, 'can update existing!')
+
+        this.table[index].value = value
+        return null
+      }
+
+      index += 1
+      index = index % this.capacity
+    }
+  }
 
   /**
    * @param {number} key
