@@ -1,4 +1,4 @@
-const { logPrimitiveArraysEqual } = require('../utils/utils.js')
+const { logPrimitiveArraysEqual } = require('../utils/test.js')
 const { LinkedList } = require('./linkedList.js')
 
 const inputArray = ['insertHead', 1, 'insertTail', 2, 'insertHead', 0, 'remove', 1, 'getValues']

@@ -1,4 +1,4 @@
-const { logPrimitiveArraysEqual } = require('../utils/utils.js')
+const { logPrimitiveArraysEqual } = require('../utils/test.js')
 const { Pair } = require('./pair.js')
 
 const inputArray = [new Pair(3, 'cat'), new Pair(3, 'bird'), new Pair(2, 'dog')]

@@ -1,4 +1,4 @@
-const { logPrimitiveArraysEqual } = require('../utils/utils.js')
+const { logPrimitiveArraysEqual } = require('../utils/test.js')
 
 const inputArray = [2, 3, 4, 1, 6]
 const expectedOutputArray = [1, 2, 3, 4, 6]

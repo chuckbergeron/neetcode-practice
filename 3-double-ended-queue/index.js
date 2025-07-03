@@ -1,4 +1,4 @@
-const { logPrimitiveArraysEqual } = require('../utils/utils.js')
+const { logPrimitiveArraysEqual } = require('../utils/test.js')
 const { Deque } = require('./deque.js')
 
 // const testCaseArray1 = ['isEmpty', 'append', 10, 'isEmpty', 'appendleft', 20, 'popleft', 'pop', 'pop', 'append', 30, 'pop', 'isEmpty']

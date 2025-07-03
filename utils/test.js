@@ -31,4 +31,30 @@ const logPrimitiveArraysEqual = (expectedOutputArray, resultArray) => {
   }
 }
 
-module.exports = { logPrimitiveArraysEqual, primitiveArraysAreEqualJSON }
+const executeFunctionArray = (inputArray, classInstance = null, _class = null) => {
+  const resultArray = []
+
+  for (let i = 0; i < inputArray.length; i++) {
+    let input = inputArray[i]
+
+    if (typeof input === 'string') {
+      if (!classInstance[input]) {
+        console.error(`Could not find function '${input}()' in instance of ${classInstance.constructor.name} class`)
+        throw new Error('asd')
+      }
+
+      let j = i + 1
+      let args = []
+      while (typeof inputArray[j] === 'number') {
+        args.push(inputArray[j])
+        j++
+      }
+
+      resultArray.push(classInstance[input](...args))
+    }
+  }
+
+  return resultArray
+}
+
+module.exports = { logPrimitiveArraysEqual, primitiveArraysAreEqualJSON, executeFunctionArray }
