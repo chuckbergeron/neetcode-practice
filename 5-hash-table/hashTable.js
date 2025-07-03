@@ -1,5 +1,3 @@
-const GREEN_CONSOLE_LOG_STRING = '\x1b[32m%s\x1b[0m'
-
 // Design a Hash Table class. Your HashTable class should support the following operations:
 //
 // HashTable(int capacity) will initialize an empty hash table with a capacity of capacity, where capacity > 1.
@@ -65,9 +63,6 @@ class HashTable {
 
     // 1. Insert
     let index = this.hash(key)
-    console.log('INSERT:', key)
-    console.log('index')
-    console.log(index)
 
     // Open Addressing:
     // Loop through records in the array until we find an existing entry key that matches or
@@ -75,8 +70,6 @@ class HashTable {
     while (true) {
       // 1. Found an empty slot to use, insert new node
       if (this.table[index] === null) {
-        console.log(GREEN_CONSOLE_LOG_STRING, 'can insert here!')
-
         const newNode = new Node(key, value)
         this.table[index] = newNode
 
@@ -92,8 +85,6 @@ class HashTable {
 
       // 2. Found existing, update it
       if (this.table[index].key === key) {
-        console.log(GREEN_CONSOLE_LOG_STRING, 'can update existing!')
-
         this.table[index].value = value
         return null
       }
@@ -109,10 +100,6 @@ class HashTable {
    */
   get(key) {
     const index = this.hash(key)
-
-    console.log('GET:', key)
-    console.log('index')
-    console.log(index)
 
     // Open Addressing:
     // Loop through records in the array until we find an existing entry key that matches or
@@ -131,7 +118,6 @@ class HashTable {
 
       // 2. Found existing, return it
       if (this.table[index].key === key) {
-        console.log(GREEN_CONSOLE_LOG_STRING, 'FOUND!')
         return this.table[index].value
       }
     }
@@ -143,10 +129,6 @@ class HashTable {
    */
   remove(key) {
     const index = this.hash(key)
-
-    console.log('REMOVE:', key)
-    console.log('index')
-    console.log(index)
 
     while (true) {
       // 1. Found empty slot, return false
@@ -162,7 +144,6 @@ class HashTable {
 
       // 2. Found existing, return it
       if (this.table[index].key === key) {
-        console.log(GREEN_CONSOLE_LOG_STRING, 'REMOVING!')
         this.table[index] = null
         this.size -= 1
         return true
