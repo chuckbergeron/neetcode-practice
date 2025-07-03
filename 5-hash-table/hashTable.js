@@ -24,7 +24,6 @@ class Node {
   constructor(key, value) {
     this.key = key
     this.value = value
-    this.next = null
   }
 }
 
@@ -59,6 +58,11 @@ class HashTable {
    * @return {null} (instead of undefined, to match the contrived test case)
    */
   insert(key, value) {
+    if (!key || !value) {
+      console.error('Argument error, cannot insert undefined key or value')
+      throw new Error('Argument Error')
+    }
+
     // 1. Insert
     let index = this.hash(key)
     console.log('INSERT:', key)
@@ -160,6 +164,7 @@ class HashTable {
       if (this.table[index].key === key) {
         console.log(GREEN_CONSOLE_LOG_STRING, 'REMOVING!')
         this.table[index] = null
+        this.size -= 1
         return true
       }
     }
@@ -168,17 +173,35 @@ class HashTable {
   /**
    * @returns {number}
    */
-  getSize() {}
+  getSize() {
+    return this.size
+  }
 
   /**
    * @returns {number}
    */
-  getCapacity() {}
+  getCapacity() {
+    return this.capacity
+  }
 
   /**
    * @return {void}
    */
-  resize() {}
+  resize() {
+    this.capacity = 2 * this.capacity
+
+    const oldTable = this.table
+
+    const newTable = new Array(this.capacity).fill(null)
+    this.table = newTable
+    this.size = 0
+
+    for (let node of oldTable) {
+      if (node) {
+        this.insert(node.key, node.value)
+      }
+    }
+  }
 }
 
 module.exports = {
