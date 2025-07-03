@@ -36,12 +36,19 @@ const logPrimitiveArraysEqual = (expectedOutputArray, resultArray) => {
  * @returns {String|Number|Object|null[]}, the resultant array
  */
 const executeFunctionArray = (inputArray, _class) => {
-  const classInstance = _instantiateClass(inputArray, _class)
+  let resultArray = []
+  // This is to match Neetcode.io's testing lib, which expects to insert a null in the
+  // result array when a class with args is passed as the first few elements of the input array
+  if (CAPITAL_FIRST_LETTER_REGEX.test(inputArray[0])) {
+    resultArray = new Array(1).fill(null)
+  }
 
-  return _executeInputArrayFunctions(inputArray, classInstance)
+  const classInstance = instantiateClass(inputArray, _class)
+
+  return executeInputArrayFunctions(inputArray, classInstance, resultArray)
 }
 
-const _instantiateClass = (inputArray, _class) => {
+const instantiateClass = (inputArray, _class) => {
   // Instantiate a new instance of the passed in class if necessary
   if (CAPITAL_FIRST_LETTER_REGEX.test(inputArray[0])) {
     if (!_class) {
@@ -58,13 +65,13 @@ const _instantiateClass = (inputArray, _class) => {
     }
   }
 
-  const args = _getConstructorArgs(inputArray)
+  const args = getConstructorArgs(inputArray)
   classInstance = new _class(...args)
 
   return classInstance
 }
 
-const _getConstructorArgs = (inputArray) => {
+const getConstructorArgs = (inputArray) => {
   const args = []
   let i = 0
 
@@ -78,7 +85,7 @@ const _getConstructorArgs = (inputArray) => {
   return args
 }
 
-const _getFunctionArgs = (inputArray, i) => {
+const getFunctionArgs = (inputArray, i) => {
   let j = i + 1
   let args = []
   while (typeof inputArray[j] === 'number') {
@@ -89,9 +96,7 @@ const _getFunctionArgs = (inputArray, i) => {
   return args
 }
 
-const _executeInputArrayFunctions = (inputArray, classInstance) => {
-  const resultArray = []
-
+const executeInputArrayFunctions = (inputArray, classInstance, resultArray) => {
   for (let i = 0; i < inputArray.length; i++) {
     let input = inputArray[i]
 
@@ -101,7 +106,7 @@ const _executeInputArrayFunctions = (inputArray, classInstance) => {
         throw new Error('Invalid function name')
       }
 
-      const args = _getFunctionArgs(inputArray, i)
+      const args = getFunctionArgs(inputArray, i)
 
       resultArray.push(classInstance[input](...args))
     }

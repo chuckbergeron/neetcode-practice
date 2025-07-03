@@ -56,7 +56,7 @@ class HashTable {
    * @return {null} (instead of undefined, to match the contrived test case)
    */
   insert(key, value) {
-    if (!key || !value) {
+    if (key === undefined || value === undefined) {
       console.error('Argument error, cannot insert undefined key or value')
       throw new Error('Argument Error')
     }
@@ -99,7 +99,7 @@ class HashTable {
    * @returns {number}
    */
   get(key) {
-    const index = this.hash(key)
+    let index = this.hash(key)
 
     // Open Addressing:
     // Loop through records in the array until we find an existing entry key that matches or
@@ -110,15 +110,15 @@ class HashTable {
         return -1
       }
 
-      // 2. Found record but not the one we were looking for, move on to next slot
+      // 2. Found existing, return it
+      if (this.table[index] && this.table[index].key === key) {
+        return this.table[index].value
+      }
+
+      // 3. Found record but not the one we were looking for, move on to next slot
       if (this.table[index].key !== key) {
         index += 1
         index = index % this.capacity
-      }
-
-      // 2. Found existing, return it
-      if (this.table[index].key === key) {
-        return this.table[index].value
       }
     }
   }
@@ -128,7 +128,7 @@ class HashTable {
    * @returns {boolean}
    */
   remove(key) {
-    const index = this.hash(key)
+    let index = this.hash(key)
 
     while (true) {
       // 1. Found empty slot, return false

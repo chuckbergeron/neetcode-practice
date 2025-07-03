@@ -3,23 +3,36 @@ const { HashTable } = require('./hashTable.js')
 
 const inputArray = [
   'HashTable',
-  2,
-  'getCapacity',
+  8,
   'insert',
-  6,
-  7,
-  'getCapacity',
+  8,
+  0,
   'insert',
-  1,
-  2,
-  'getCapacity',
+  16,
+  0,
   'insert',
-  3,
-  4,
-  'getCapacity',
-  'getSize'
+  24,
+  0,
+  'get',
+  8,
+  'get',
+  16,
+  'get',
+  24,
+  'remove',
+  24,
+  'get',
+  24,
+  'remove',
+  16,
+  'get',
+  16,
+  'remove',
+  8,
+  'get',
+  8
 ]
-const expectedOutputArray = [2, null, 4, null, 8, null, 8, 3]
+const expectedOutputArray = [null, null, null, null, 0, 0, 0, true, -1, true, -1, true, -1]
 
 const resultArray = executeFunctionArray(inputArray, HashTable)
 
