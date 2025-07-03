@@ -61,9 +61,11 @@ class HashTable {
   insert(key, value) {
     // 1. Insert
     let index = this.hash(key)
+    console.log('INSERT:', key)
     console.log('index')
     console.log(index)
 
+    // Open Addressing:
     // Loop through records in the array until we find an existing entry key that matches or
     // an empty slot to fill in
     while (true) {
@@ -101,13 +103,67 @@ class HashTable {
    * @param {number} key
    * @returns {number}
    */
-  get(key) {}
+  get(key) {
+    const index = this.hash(key)
+
+    console.log('GET:', key)
+    console.log('index')
+    console.log(index)
+
+    // Open Addressing:
+    // Loop through records in the array until we find an existing entry key that matches or
+    // an empty slot to fill in
+    while (true) {
+      // 1. Found empty slot, return -1
+      if (this.table[index] === null) {
+        return -1
+      }
+
+      // 2. Found record but not the one we were looking for, move on to next slot
+      if (this.table[index].key !== key) {
+        index += 1
+        index = index % this.capacity
+      }
+
+      // 2. Found existing, return it
+      if (this.table[index].key === key) {
+        console.log(GREEN_CONSOLE_LOG_STRING, 'FOUND!')
+        return this.table[index].value
+      }
+    }
+  }
 
   /**
    * @param {number} key
    * @returns {boolean}
    */
-  remove(key) {}
+  remove(key) {
+    const index = this.hash(key)
+
+    console.log('REMOVE:', key)
+    console.log('index')
+    console.log(index)
+
+    while (true) {
+      // 1. Found empty slot, return false
+      if (this.table[index] === null) {
+        return false
+      }
+
+      // 2. Found record but not the one we were looking for, move on to next slot
+      if (this.table[index].key !== key) {
+        index += 1
+        index = index % this.capacity
+      }
+
+      // 2. Found existing, return it
+      if (this.table[index].key === key) {
+        console.log(GREEN_CONSOLE_LOG_STRING, 'REMOVING!')
+        this.table[index] = null
+        return true
+      }
+    }
+  }
 
   /**
    * @returns {number}
