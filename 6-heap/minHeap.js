@@ -52,10 +52,6 @@ class MinHeap {
 
     let currentIndex = this.heap.length - 1
     let parentIndex = getParentIndex(currentIndex)
-    console.log('currentIndex:')
-    console.log(currentIndex)
-    console.log('parentIndex:')
-    console.log(parentIndex)
 
     // "Percolate Up"
     //
@@ -63,11 +59,6 @@ class MinHeap {
     // then compare the newly swapped node’s parent to the new value we just swapped in,
     // if it’s also smaller, swap with that parent, etc.
     while (this.heap[currentIndex] < this.heap[parentIndex]) {
-      console.log('currentIndex:')
-      console.log(currentIndex)
-      console.log('parentIndex:')
-      console.log(parentIndex)
-
       const valueToSwap = this.heap[currentIndex]
       const parentValue = this.heap[getParentIndex(currentIndex)]
 
