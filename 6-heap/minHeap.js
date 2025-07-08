@@ -59,10 +59,10 @@ class MinHeap {
     // then compare the newly swapped node’s parent to the new value we just swapped in,
     // if it’s also smaller, swap with that parent, etc.
     while (this.heap[currentIndex] < this.heap[parentIndex]) {
-      const valueToSwap = this.heap[currentIndex]
+      const currentValue = this.heap[currentIndex]
       const parentValue = this.heap[getParentIndex(currentIndex)]
 
-      this.heap[getParentIndex(currentIndex)] = valueToSwap
+      this.heap[getParentIndex(currentIndex)] = currentValue
       this.heap[currentIndex] = parentValue
 
       currentIndex = parentIndex
@@ -112,6 +112,44 @@ class MinHeap {
    * @return {null} (instead of undefined, to match the contrived test case)
    */
   heapify(array) {
+    console.log(array)
+    if (array.length === 0) {
+      throw new Error('Cannot run heapify on array of 0 length')
+    }
+
+    // Move the first element to the end of the array
+    array.push(array[0])
+
+    // Fill first slot with dummy null
+    array[0] = null
+
+    // Find the middle, we can safely ignore the second half of the array since that level
+    // will have no children
+    const currentIndex = Math.floor(array.length / 2)
+
+    // "Percolate Down"
+    //
+    // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
+    for (let i = currentIndex; i > 1; i--) {
+      const leftChildIndex = 2 * i
+      const rightChildIndex = 2 * i + 1
+
+      let currentValue = this.heap[currentIndex]
+
+      const leftChildValue = this.heap[leftChildIndex]
+      if (currentValue > leftChildValue) {
+        this.heap[currentIndex] = leftChildValue
+        this.heap[2 * currentIndex] = currentValue
+        currentValue = this.heap[2 * currentIndex]
+      }
+
+      const rightChildValue = this.heap[rightChildIndex]
+      if (currentValue > rightChildValue) {
+        this.heap[currentIndex] = rightChildValue
+        this.heap[2 * currentIndex + 1] = currentValue
+      }
+    }
+
     return null
   }
 }

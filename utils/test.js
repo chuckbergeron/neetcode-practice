@@ -88,7 +88,7 @@ const getConstructorArgs = (inputArray) => {
 const getFunctionArgs = (inputArray, i) => {
   let j = i + 1
   let args = []
-  while (typeof inputArray[j] === 'number') {
+  while (typeof inputArray[j] === 'number' || Array.isArray(inputArray[j])) {
     args.push(inputArray[j])
     j++
   }
@@ -98,7 +98,7 @@ const getFunctionArgs = (inputArray, i) => {
 
 const executeInputArrayFunctions = (inputArray, classInstance, resultArray) => {
   for (let i = 0; i < inputArray.length; i++) {
-    let input = inputArray[i]
+    const input = inputArray[i]
 
     if (typeof input === 'string') {
       if (!classInstance[input]) {
