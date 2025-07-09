@@ -86,12 +86,17 @@ class MinHeap {
       return this.heap.pop()
     }
 
-    const val = this.heap[this.heap.length - 1]
+    const val = this.heap[1]
 
     // Move the last item in the array to be the first (1th index, after the null dummy value)
-    this.heap[this.heap.length - 1] = this.heap.pop()
+    this.heap[1] = this.heap.pop()
 
-    console.log(this.heap)
+    // "Percolate Down"
+    // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
+    let i = 1
+    console.log('')
+    console.log('pop()')
+    this.percolateDown(i)
 
     return val
   }
@@ -112,7 +117,8 @@ class MinHeap {
    * @return {null} (instead of undefined, to match the contrived test case)
    */
   heapify(array) {
-    console.log(array)
+    console.log('heapify()')
+
     if (array.length === 0) {
       throw new Error('Cannot run heapify on array of 0 length')
     }
@@ -125,32 +131,63 @@ class MinHeap {
 
     // Find the middle, we can safely ignore the second half of the array since that level
     // will have no children
-    const currentIndex = Math.floor(array.length / 2)
+    let currentIndex = Math.floor((array.length - 1) / 2)
 
-    // "Percolate Down"
-    //
-    // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
-    for (let i = currentIndex; i > 1; i--) {
+    this.heap = array
+
+    while (currentIndex > 0) {
+      console.log('heapify while')
+      this.percolateDown(currentIndex)
+
+      currentIndex = currentIndex - 1
+    }
+    console.log('at the end')
+    console.log(this.heap)
+
+    return null
+  }
+
+  // "Percolate Down"
+  // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
+  percolateDown(i) {
+    while (2 * i < this.heap.length) {
+      console.log('')
+      console.log('')
+      console.log('i')
+      console.log(i)
+
       const leftChildIndex = 2 * i
       const rightChildIndex = 2 * i + 1
 
-      let currentValue = this.heap[currentIndex]
+      console.log('leftChildIndex')
+      console.log(leftChildIndex)
+      console.log('rightChildIndex')
+      console.log(rightChildIndex)
 
+      const currentValue = this.heap[i]
       const leftChildValue = this.heap[leftChildIndex]
-      if (currentValue > leftChildValue) {
-        this.heap[currentIndex] = leftChildValue
-        this.heap[2 * currentIndex] = currentValue
-        currentValue = this.heap[2 * currentIndex]
-      }
-
       const rightChildValue = this.heap[rightChildIndex]
-      if (currentValue > rightChildValue) {
-        this.heap[currentIndex] = rightChildValue
-        this.heap[2 * currentIndex + 1] = currentValue
+      console.log('currentValue')
+      console.log(currentValue)
+      console.log('leftChildValue')
+      console.log(leftChildValue)
+      console.log('rightChildValue')
+      console.log(rightChildValue)
+
+      // Swap right child
+      if (rightChildIndex < this.heap.length && rightChildValue < leftChildValue && currentValue > rightChildValue) {
+        this.heap[i] = leftChildValue
+        this.heap[2 * i] = currentValue
+        i = 2 * i + 1
+      } else if (currentValue > leftChildValue) {
+        // Swap Left child
+        this.heap[i] = rightChildValue
+        this.heap[2 * i + 1] = currentValue
+        i = 2 * i
+      } else {
+        break
       }
     }
-
-    return null
   }
 }
 
