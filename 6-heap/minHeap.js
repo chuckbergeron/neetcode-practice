@@ -94,8 +94,7 @@ class MinHeap {
     // "Percolate Down"
     // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
     let i = 1
-    console.log('')
-    console.log('pop()')
+
     this.percolateDown(i)
 
     return val
@@ -117,11 +116,9 @@ class MinHeap {
    * @return {null} (instead of undefined, to match the contrived test case)
    */
   heapify(array) {
-    console.log('heapify()')
-
-    if (array.length === 0) {
-      throw new Error('Cannot run heapify on array of 0 length')
-    }
+    // if (array.length === 0) {
+    //   throw new Error('Cannot run heapify on array of 0 length')
+    // }
 
     // Move the first element to the end of the array
     array.push(array[0])
@@ -134,15 +131,11 @@ class MinHeap {
     let currentIndex = Math.floor((array.length - 1) / 2)
 
     this.heap = array
-
     while (currentIndex > 0) {
-      console.log('heapify while')
       this.percolateDown(currentIndex)
 
       currentIndex = currentIndex - 1
     }
-    console.log('at the end')
-    console.log(this.heap)
 
     return null
   }
@@ -151,38 +144,22 @@ class MinHeap {
   // If the value we’re pointing at is larger than it's child we're comparing it to, swap it
   percolateDown(i) {
     while (2 * i < this.heap.length) {
-      console.log('')
-      console.log('')
-      console.log('i')
-      console.log(i)
-
       const leftChildIndex = 2 * i
       const rightChildIndex = 2 * i + 1
-
-      console.log('leftChildIndex')
-      console.log(leftChildIndex)
-      console.log('rightChildIndex')
-      console.log(rightChildIndex)
 
       const currentValue = this.heap[i]
       const leftChildValue = this.heap[leftChildIndex]
       const rightChildValue = this.heap[rightChildIndex]
-      console.log('currentValue')
-      console.log(currentValue)
-      console.log('leftChildValue')
-      console.log(leftChildValue)
-      console.log('rightChildValue')
-      console.log(rightChildValue)
 
       // Swap right child
       if (rightChildIndex < this.heap.length && rightChildValue < leftChildValue && currentValue > rightChildValue) {
-        this.heap[i] = leftChildValue
-        this.heap[2 * i] = currentValue
+        this.heap[i] = rightChildValue
+        this.heap[2 * i + 1] = currentValue
         i = 2 * i + 1
       } else if (currentValue > leftChildValue) {
         // Swap Left child
-        this.heap[i] = rightChildValue
-        this.heap[2 * i + 1] = currentValue
+        this.heap[i] = leftChildValue
+        this.heap[2 * i] = currentValue
         i = 2 * i
       } else {
         break
