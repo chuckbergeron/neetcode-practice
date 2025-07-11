@@ -17,7 +17,9 @@
  * Data structure implementing the Graph
  */
 class Graph {
-  // this.adjacencyList = { "val": [...neighbors...] }
+  /**
+   * Type: this.adjacencyList = { number: number[] } where number[] is neighbors
+   */
   constructor() {
     this.adjacencyList = {}
   }
@@ -61,31 +63,33 @@ class Graph {
    * @return {boolean}
    */
   hasPath(src, dst) {
-    if (this.adjacencyList[src]) {
-      return this.hasPathHelper(src, dst)
-    }
-
-    return false
+    const visited = new Set()
+    return this.dfs(src, dst, visited)
   }
 
-  // neighbours = [1,3,4]
   /**
-   * @param {number} src
-   * @param {number} target
-   * @return {boolean}
+   * Helper method for Depth-First Search (DFS).
+   * @param {number} src - Source vertex
+   * @param {number} target - Destination vertex
+   * @param {Set} visited - Set of visited vertices
+   * @return {boolean} True if path exists, false otherwise
    */
-  hasPathHelper(src, target) {
-    const neighbors = this.adjacencyList[src]
+  dfs(src, target, visited) {
+    if (src === target) {
+      return true
+    }
 
-    // iterate through neighbors
+    visited.add(src)
+
+    const neighbors = this.adjacencyList[src]
     for (let i = 0; i < neighbors.length; i++) {
       const neighbor = neighbors[i]
 
-      if (neighbor === target) {
-        return true
+      if (!visited.has(neighbor)) {
+        if (this.dfs(neighbor, target, visited)) {
+          return true
+        }
       }
-
-      return this.hasPathHelper(neighbor, target)
     }
 
     return false
