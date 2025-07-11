@@ -9,21 +9,6 @@
 // Note: push and pop should be implemented in O(logn) O(logn) time complexity, while top should be implemented
 // in  O(1), and heapify should be implemented in O(n) time complexity.
 
-/**
- * MinHeap Node
- * Represents a key/val node in the Hash Table.
- */
-class Node {
-  /**
-   * @param {number} key - Key for the node
-   * @param {number} value - Value for the node
-   */
-  constructor(key, value) {
-    this.key = key
-    this.value = value
-  }
-}
-
 // Helper formulas:
 //
 // leftChild = 2 * i
